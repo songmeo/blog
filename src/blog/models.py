@@ -1,4 +1,6 @@
 from django.db import models
+from django_extensions.db.fields import AutoSlugField
+import datetime
 from organizer.models import Startup, Tag
 from django.db.models import (
     CharField,
@@ -18,7 +20,7 @@ class Post(Model):
     )
     text = TextField()
     pub_date = DateField(
-        "date published", default=date.today
+        "date published", default=datetime.date.today
     )
     tags = ManyToManyField(
         Tag, related_name="blog_posts"

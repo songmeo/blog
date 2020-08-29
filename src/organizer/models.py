@@ -1,4 +1,5 @@
 from django.db import models
+from django_extensions.db.fields import AutoSlugField
 from django.db.models import (
     CharField,
     DateField,
@@ -6,6 +7,9 @@ from django.db.models import (
     Model,
     SlugField,
     TextField,
+    EmailField,
+    URLField,
+    ForeignKey
 )
 # Create your models here.
 class Tag(Model):
@@ -13,12 +17,15 @@ class Tag(Model):
         max_length=31,
         unique=True,
     )
-    slug = SlugField(
+    slug = AutoSlugField(
+        help_text="A label for URL config.",
         max_length=31,
-        unique=True,
-        help_text="A label for URL config.")
+        populate_from=["name"],
+    )
     class Meta:
         ordering = ["name"]
+    def __str__(self):
+        return self.name
 
 class Startup(Model):
     name = CharField(
